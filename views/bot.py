@@ -40,7 +40,7 @@ with left:
     with st.container(key="panel_chat"):
         html('<div class="panel-head"><div class="ico">🤖</div>'
              '<div><div class="t">LungData Assistant</div><div class="s">● Online</div></div>'
-             '<div style="margin-left:auto"><span class="pill">DS301 Pipeline v2.4</span></div></div>')
+             '</div>')
 
         st.session_state.setdefault("chat", [{"role": "assistant", "content": GREETING}])
         history = st.container()

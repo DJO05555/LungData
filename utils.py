@@ -5,10 +5,9 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 APP_NAME = "LungData"
-GROUP = "DS301"
 TEAL, RED = "#14B8A6", "#EF4444"
 
-GITHUB_URL = "https://github.com/"             # TODO: paste your team's repo link
+GITHUB_URL = "https://github.com/DJO05555/LungData"
 RAW_FILE = "lung_study_raw_v0.csv"             # TODO: raw file name shown under the messy dashboard
 CLEAN_FILE = "cleaned_lung_cancer_dataset.csv" # TODO: cleaned file name
 
@@ -36,14 +35,11 @@ TEAM = [
 ]
 
 PAGES = [
-    ("views/home.py", "Home", "🏠"),
-    ("views/messy.py", "Messy Data", "🧹"),
-    ("views/clean.py", "Cleaned Data", "✅"),
-    ("views/bot.py", "AI Bot", "🤖"),
+    ("views/home.py", "Home"),
+    ("views/messy.py", "Messy Data"),
+    ("views/clean.py", "Cleaned Data"),
+    ("views/bot.py", "AI Bot"),
 ]
-
-PERSON_SVG = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="#003731">'
-              '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8z"/></svg>')
 
 LUNG_SVG = """
 <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px">
@@ -69,25 +65,23 @@ CSS = """
 :root {--gut: max(1.5rem, calc((100vw - 1200px) / 2)); --line: rgba(255,255,255,.12);
        --card: rgba(255,255,255,.06); --muted: rgba(255,255,255,.65);}
 html, body, .stApp, p, h1, h2, h3, h4, a, button, input, textarea, label {font-family: 'Inter', sans-serif;}
-.stApp {overflow-x: hidden;}
+html, body, .stApp {margin: 0; overflow-x: hidden;}
 [data-testid="stHeader"], [data-testid="stToolbar"], #MainMenu, footer {display: none !important;}
 .block-container, [data-testid="stMainBlockContainer"] {max-width: none !important; padding: 0 var(--gut) 0 var(--gut) !important;}
-.right {display: flex; justify-content: flex-end; align-items: center; gap: .4rem;}
 .muted {color: var(--muted);}
 .small {font-size: .8rem;}
 .dot {display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #14B8A6;}
 
 /* ---------- top bar (full width) ---------- */
 .st-key-topbar {position: sticky; top: 0; z-index: 999; background: #1E2428; border-bottom: 1px solid var(--line);
-                margin-top: 0 !important; margin-left: calc(-1 * var(--gut)); margin-right: 0;
+                margin: 0 calc(-1 * var(--gut)) 0 !important;
                 width: calc(100% + 2 * var(--gut)) !important; max-width: none !important;
                 box-sizing: border-box; padding: 0 var(--gut);}
 .brand {display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.25rem; color: #fff; white-space: nowrap;}
-.pill {padding: .15rem .6rem; border-radius: 999px; border: 1px solid #3C4947; background: #252B2F;
-       color: #BBCAC6; font-size: .7rem; font-weight: 600; white-space: nowrap;}
-.avatar {width: 32px; height: 32px; border-radius: 50%; background: #14B8A6; display: grid; place-items: center;}
+.st-key-nav [data-testid="stHorizontalBlock"] {justify-content: flex-end; gap: 32px !important;}
+.st-key-nav [data-testid="stColumn"] {width: auto !important; flex: 0 0 auto !important; min-width: 0 !important;}
 .st-key-nav a {background: transparent !important; justify-content: center; border-radius: 0 !important;
-               padding: 1.15rem .25rem !important; border-bottom: 2px solid transparent; gap: .4rem; white-space: nowrap;}
+               padding: 1.25rem 0 !important; border-bottom: 2px solid transparent; gap: 0; white-space: nowrap;}
 .st-key-nav a p {color: rgba(255,255,255,.65) !important; font-weight: 600; font-size: .9rem; margin: 0; white-space: nowrap;
                  overflow: visible !important; text-overflow: clip !important;}
 .st-key-nav a:hover p {color: #fff !important;}
@@ -119,12 +113,16 @@ html, body, .stApp, p, h1, h2, h3, h4, a, button, input, textarea, label {font-f
        border-top: 1px solid var(--line); margin-top: 1rem; padding-top: .8rem;}
 .heroart {aspect-ratio: 1; max-width: 420px; margin-left: auto; background: var(--card); border: 1px solid var(--line);
           border-radius: 16px; display: grid; place-items: center; padding: 1.5rem;}
-.about {display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 2rem;}
-.about .row {color: rgba(255,255,255,.9); margin: .55rem 0; font-size: 1rem;}
-.chips {display: flex; flex-wrap: wrap; gap: .7rem;}
-.chips span {white-space: nowrap; padding: .35rem .9rem; border-radius: 999px; border: 1px solid var(--line);
-             background: rgba(255,255,255,.04); color: rgba(255,255,255,.8);
-             font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .75rem;}
+.about {display: flex; justify-content: space-between; align-items: center; gap: 2rem; padding: 2rem;}
+.about .facts {display: grid; gap: 1rem;}
+.about .row {display: flex; align-items: center; gap: .7rem; color: rgba(255,255,255,.9); font-size: 1rem;}
+.line-icon {width: 20px; height: 20px; flex: 0 0 20px; color: #14B8A6; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: currentColor;}
+.ico24 .line-icon {width: 20px; height: 20px; color: rgba(255,255,255,.7);}
+.tech-tiles {display: grid; grid-template-columns: repeat(3, 160px); gap: 12px; align-items: center;}
+.tech-tile {width: 160px; height: 96px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.04);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; overflow: hidden;}
+.tech-tile img {display: block; height: 40px; max-width: 92px; object-fit: contain; margin-bottom: 7px;}
+.tech-tile span {color: var(--muted); font-size: .7rem; font-weight: 600; line-height: 1;}
 .member {text-align: center;}
 .member .av {width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2);
              background: rgba(255,255,255,.08); display: grid; place-items: center; margin: 0 auto .7rem;
@@ -133,14 +131,17 @@ html, body, .stApp, p, h1, h2, h3, h4, a, button, input, textarea, label {font-f
 .member span {color: var(--muted); font-size: .75rem;}
 
 /* explore cards (container with a colored top edge) */
-[class*="st-key-card_"] {background: var(--card); border: 1px solid var(--line); border-top: 4px solid rgba(255,255,255,.3);
-                         border-radius: 16px; padding: 1.6rem;}
+[class*="st-key-card_"] {background: var(--card); border: 1px solid var(--line); border-top: 3px solid rgba(255,255,255,.3);
+                         border-radius: 16px; padding: 1.5rem; height: 264px; box-sizing: border-box; overflow: hidden;}
+.st-key-explore_grid [data-testid="stHorizontalBlock"] {gap: 24px !important;}
+[class*="st-key-card_"] [data-testid="stVerticalBlock"] {height: 100%; display: flex; flex-direction: column;}
+[class*="st-key-card_"] [data-testid="stPageLink-NavLink"], [class*="st-key-card_"] .lnk {margin-top: auto;}
 .st-key-card_messy {border-top-color: #EF4444 !important;}
 .st-key-card_clean {border-top-color: #14B8A6 !important;}
 [class*="st-key-card_"] a {padding: 0 !important; background: transparent !important;}
 [class*="st-key-card_"] a p {color: #14B8A6 !important; font-weight: 600; font-size: .88rem; margin: 0;}
 .lnk {color: #14B8A6; font-weight: 600; font-size: .88rem; text-decoration: none;}
-.ico24 {font-size: 1.5rem; line-height: 1;}
+.ico24 {height: 20px; line-height: 1;}
 
 /* buttons */
 .st-key-cta_primary a {background: #14B8A6 !important; border-radius: 8px !important; padding: .7rem 1.4rem !important; justify-content: center;}
@@ -205,17 +206,15 @@ def inject_css(accent=TEAL, active=0):
 
 def header():
     with st.container(key="topbar"):
-        left, mid, right = st.columns([2, 6, 2], vertical_alignment="center")
+        left, right = st.columns([1, 3], vertical_alignment="center")
         with left:
-            html(f'<div class="brand">{APP_NAME}<span class="dot"></span><span class="pill">{GROUP}</span></div>')
-        with mid:
-            with st.container(key="nav"):
-                cols = st.columns([1, 1.5, 1.6, 1.1])
-                for col, (path, label, icon) in zip(cols, PAGES):
-                    with col:
-                        st.page_link(path, label=label, icon=icon)
+            html(f'<div class="brand">{APP_NAME}<span class="dot"></span></div>')
         with right:
-            html(f'<div class="right"><div class="avatar">{PERSON_SVG}</div></div>')
+            with st.container(key="nav"):
+                cols = st.columns(len(PAGES), gap=None)
+                for col, (path, label) in zip(cols, PAGES):
+                    with col:
+                        st.page_link(path, label=label)
 
 
 def footer():
@@ -224,7 +223,7 @@ def footer():
         left, middle, right = st.columns([1, 3, 1], vertical_alignment="center")
         with middle:
             html('<div class="muted small" style="text-align:center">'
-                 'Group 5 · DS301 Introduction to Big Data · Synthetic data, not medical advice</div>')
+                 'Group 5 · Introduction to Big Data · Synthetic data, not medical advice</div>')
         
 def stat(value, caption):
     html(f'<div class="card stat"><div class="v">{value}</div><div class="c">{caption}</div></div>')
