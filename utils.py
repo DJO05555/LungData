@@ -1,8 +1,11 @@
+import base64
+import mimetypes
 from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+from PIL import Image  # installed together with Streamlit
 
 APP_NAME = "LungData"
 TEAL, RED = "#14B8A6", "#EF4444"
@@ -11,8 +14,12 @@ GITHUB_URL = "https://github.com/DJO05555/LungData"
 RAW_FILE = "lung_study_raw_v0.csv"             # TODO: raw file name shown under the messy dashboard
 CLEAN_FILE = "cleaned_lung_cancer_dataset.csv" # TODO: cleaned file name
 
-# Paste the Power BI "Publish to web" link (the src="..." inside the iframe code). "" = placeholder.
-POWERBI = {"messy": "", "clean": ""}
+# Paste each Power BI "Publish to web" link between the quotes (the src="..." inside the iframe code).
+# It must start with https://app.powerbi.com/view?r=   ("" = placeholder box)
+POWERBI = {
+    "messy": "https://app.powerbi.com/reportEmbed?reportId=f8d82a2d-c8b1-4199-97a8-8be7c9efc1d8&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4",
+    "clean": "https://app.powerbi.com/reportEmbed?reportId=09d6907b-2d20-465c-8deb-be6606a69b5d&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4",
+}
 
 STATS = {
     "records": "5,004,574",
@@ -25,7 +32,6 @@ STATS = {
     "clean_missing": "TBD",      # TODO: blank cells left after cleaning
 }
 
-# TODO: replace with your real group members (these are the design's placeholders)
 TEAM = [
     ("RA", "Ralph Zedrick Abayon", "Lead Architect"),
     ("LE", "Lance Evangelista", "Data Pipeline"),
@@ -191,6 +197,58 @@ button[data-baseweb="tab"][aria-selected="true"] p {color: __ACCENT__ !important
 </style>
 """
 
+# ---------- image slider (runs inside its own small page, so it needs its own CSS and JS) ----------
+SLIDER_DOC = """
+<style>
+html, body {margin: 0; background: transparent; font-family: Inter, system-ui, sans-serif;}
+.wrap {position: relative; width: 100%; height: 100vh; box-sizing: border-box; overflow: hidden;
+       border: 1px solid rgba(255,255,255,.12); border-radius: 16px; background: #0E1418;}
+.slide {position: absolute; inset: 0; display: none; align-items: center; justify-content: center;}
+.slide.on {display: flex;}
+.slide img {max-width: 100%; max-height: 100%; object-fit: contain;}
+.arrow {position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; padding: 0;
+        border: none; border-radius: 50%; cursor: pointer; display: grid; place-items: center; color: #111;
+        background: rgba(255,255,255,.65); box-shadow: 0 2px 8px rgba(0,0,0,.35); transition: background .2s, transform .2s;}
+.arrow:hover {background: rgba(255,255,255,.95); transform: translateY(-50%) scale(1.08);}
+.prev {left: 12px;}
+.next {right: 12px;}
+.count {position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,.55);
+        color: #fff; font-size: 12px; padding: 3px 12px; border-radius: 999px;}
+</style>
+<div class="wrap">
+__SLIDES__
+__ARROWS__
+<div class="count" id="count"></div>
+</div>
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const count = document.getElementById('count');
+let i = 0;
+function show(n) {
+  i = (n + slides.length) % slides.length;
+  slides.forEach((s, k) => s.classList.toggle('on', k === i));
+  count.textContent = 'Page ' + (i + 1) + ' of ' + slides.length;
+}
+const prev = document.getElementById('prev'), next = document.getElementById('next');
+if (prev) prev.onclick = () => show(i - 1);
+if (next) next.onclick = () => show(i + 1);
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowLeft') show(i - 1);
+  if (e.key === 'ArrowRight') show(i + 1);
+});
+show(0);
+</script>
+"""
+
+ARROWS = (
+    '<button class="arrow prev" id="prev" aria-label="Previous page">'
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" '
+    'stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>'
+    '<button class="arrow next" id="next" aria-label="Next page">'
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" '
+    'stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>'
+)
+
 
 def html(s):
     st.markdown(" ".join(line.strip() for line in s.strip().splitlines()), unsafe_allow_html=True)
@@ -224,7 +282,8 @@ def footer():
         with middle:
             html('<div class="muted small" style="text-align:center">'
                  'Group 5 · Introduction to Big Data · Synthetic data, not medical advice</div>')
-        
+
+
 def stat(value, caption):
     html(f'<div class="card stat"><div class="v">{value}</div><div class="c">{caption}</div></div>')
 
@@ -255,13 +314,41 @@ def powerbi_embed(key, badge, height=640):
              f'Paste the publish-to-web link into POWERBI in utils.py.</p></div>')
 
 
-def show_image(name):
-    path = Path(__file__).parent / "assets" / name
-    if path.exists():
-        st.image(str(path))
-    else:
+def _slide_files(key):
+    folder = Path(__file__).parent / "assets"
+    files = []
+    for ext in ("png", "jpg", "jpeg"):
+        files += folder.glob(f"{key}_dashboard*.{ext}")
+    return sorted(files)
+
+
+@st.cache_data(show_spinner=False)
+def _load_slides(items):
+    # items = ((path, modified-time), ...); the modified time refreshes the cache when you replace an image
+    uris, ratios = [], []
+    for path_str, _ in items:
+        p = Path(path_str)
+        mime = mimetypes.guess_type(p.name)[0] or "image/png"
+        uris.append(f"data:{mime};base64,{base64.b64encode(p.read_bytes()).decode()}")
+        with Image.open(p) as im:
+            ratios.append(im.height / im.width)
+    return uris, ratios
+
+
+def image_slider(key, width=1180):
+    files = _slide_files(key)
+    if not files:
         html(f'<div class="dash"><div class="ico">🖼️</div><h3>Image preview not available</h3>'
-             f'<p>Save a screenshot of the dashboard as assets/{name} to show it here.</p></div>')
+             f'<p>Save screenshots of the dashboard pages as assets/{key}_dashboard_1.png, '
+             f'assets/{key}_dashboard_2.png, and so on.</p></div>')
+        return
+    uris, ratios = _load_slides(tuple((str(f), f.stat().st_mtime) for f in files))
+    slides = "".join(
+        f'<div class="slide"><img src="{uri}" alt="Dashboard page {n}"></div>' for n, uri in enumerate(uris, start=1)
+    )
+    doc = SLIDER_DOC.replace("__SLIDES__", slides).replace("__ARROWS__", ARROWS if len(uris) > 1 else "")
+    height = max(360, min(900, int(width * max(ratios))))
+    components.html(doc, height=height)
 
 
 def dashboard(key, badge, status):
@@ -269,5 +356,5 @@ def dashboard(key, badge, status):
     with tab_live:
         powerbi_embed(key, badge)
     with tab_img:
-        show_image(f"{key}_dashboard.png")
-    html(f'<div class="statusbar">☁️ {status}</div>')
+        image_slider(key)
+    html(f'<div class="statusbar">☁️ {status}</div>') 
