@@ -22,14 +22,14 @@ POWERBI = {
 }
 
 STATS = {
-    "records": "5,004,574",
+    "records": "10,024,574",
     "columns": "14",
-    "raw_missing_rows": "40.8%",
-    "sparsity": "5.3–5.9%",
-    "positive_rate": "21.6%",
-    "clean_records": "TBD",      # TODO: rows after cleaning
-    "clean_columns": "TBD",      # TODO: columns after cleaning
-    "clean_missing": "TBD",      # TODO: blank cells left after cleaning
+    "raw_missing_rows": "28.8%",
+    "sparsity": "3.5-3.8%",
+    "positive_rate": "21.65%",
+    "clean_records": "10,014,991",      # TODO: rows after cleaning
+    "clean_columns": "14",      # TODO: columns after cleaning
+    "clean_missing": "9,583",      # TODO: blank cells left after cleaning
 }
 
 TEAM = [
@@ -250,6 +250,30 @@ ARROWS = (
 )
 
 
+# ---------- shared line icons (used by the messy and cleaned pages) ----------
+def icon(paths, size=22, color="#9aa4ad"):
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" '
+        f'viewBox="0 0 24 24" fill="none" stroke="{color}" stroke-width="1.75" '
+        f'stroke-linecap="round" stroke-linejoin="round">{paths}</svg>'
+    )
+
+
+ICONS = {
+    "missing": '<circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/>',
+    "labels": '<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/>',
+    "words": '<line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/>',
+    "impossible": '<circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+    "dates": '<rect x="3" y="4" width="18" height="17" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="10" y1="14" x2="14" y2="18"/><line x1="14" y1="14" x2="10" y2="18"/>',
+    "text": '<polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/>',
+    "database": '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/>',
+    "columns": '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>',
+    "alert": '<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    "chart": '<line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="9"/>',
+    "check": '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>',
+}
+
+
 def html(s):
     st.markdown(" ".join(line.strip() for line in s.strip().splitlines()), unsafe_allow_html=True)
 
@@ -357,4 +381,4 @@ def dashboard(key, badge, status):
         powerbi_embed(key, badge)
     with tab_img:
         image_slider(key)
-    html(f'<div class="statusbar">☁️ {status}</div>') 
+    html(f'<div class="statusbar">☁️ {status}</div>')

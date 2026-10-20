@@ -1,19 +1,19 @@
 import pandas as pd
 import streamlit as st
 
-from utils import RAW_FILE, STATS, dashboard, defect, footer, gap, html, kpi, table
+from utils import ICONS, RAW_FILE, STATS, dashboard, defect, footer, gap, html, icon, kpi, table
 
 gap(3)
 html('<div class="eyebrow">Step 1 · The Messy Data<span class="sub">• Stage: Ingestion &amp; Triage</span></div>')
 html('<div class="h1 mid">Raw data, straight from the source</div>')
-html('<div class="lead"><span class="hl">5 million</span> patient records with real-world mistakes baked in.</div>')
+html('<div class="lead"><span class="hl">10 million</span> patient records with real-world mistakes baked in.</div>')
 
 gap(2)
 cards = [
-    ("Cohort volume", STATS["records"], "Total ingestion rows", "🗄️"),
-    ("Schema width", STATS["columns"], "Raw attribute columns", "📏"),
-    ("Defect rate", STATS["raw_missing_rows"], "Rows with ≥1 missing cell", "⚠️"),
-    ("Field sparsity", STATS["sparsity"], "Missing per feature column", "📊"),
+    ("Cohort volume", STATS["records"], "Total ingestion rows", icon(ICONS["database"])),
+    ("Schema width", STATS["columns"], "Raw attribute columns", icon(ICONS["columns"])),
+    ("Defect rate", STATS["raw_missing_rows"], "Rows with ≥1 missing cell", icon(ICONS["alert"])),
+    ("Field sparsity", STATS["sparsity"], "Missing per feature column", icon(ICONS["chart"])),
 ]
 for col, args in zip(st.columns(4), cards):
     with col:
@@ -30,26 +30,28 @@ html('<div style="display:flex;justify-content:space-between;align-items:flex-en
 gap(1)
 
 DEFECTS = [
-    ("⛔", "5.3–5.9%", "Missing values",
+    (icon(ICONS["missing"]), "5.3–5.9%", "Missing values",
      "About 1 in 18 values blank across all 14 clinical and behavioral features.",
      "Impact: 265,000+ empty slots"),
-    ("🔤", "11 &amp; 18", "Inconsistent labels",
+    (icon(ICONS["labels"]), "11 &amp; 18", "Inconsistent labels",
      "Gender has 11 casing variations; smoking status exhibits 18 redundant permutations.",
      "E.g. 'f_m', 'male', 'MALE', 'Current-Smk'"),
-    ("🔢", "23,316 ages", "Numbers written as words",
+    (icon(ICONS["words"]), "23,316 ages", "Numbers written as words",
      "Natural language numbers ('Twenty Five', 'sixty_two') stored in numeric columns.",
      "Bypasses standard float converters"),
-    ("🚨", "128,044 negative", "Impossible values",
+    (icon(ICONS["impossible"]), "128,044 negative", "Impossible values",
      "Physiologically implausible numbers including negative patient ages (-4, -12) and ages &gt; 115.",
      "Truncates statistical standard deviations"),
-    ("📅", "~4,100 rows", "Junk dates",
+    (icon(ICONS["dates"]), "~4,100 rows", "Junk dates",
      "Relative strings ('yesterday', 'N/A') interleaved with ISO-8601, slash, and dash delimiters.",
      "Prevents time-series indexing"),
-    ("🧾", "14 of 14", "Everything is text",
-     "All 14 columns inferred as raw strings     by database parsers due to messy values.",
+    (icon(ICONS["text"]), "14 of 14", "Everything is text",
+     "All 14 columns inferred as raw strings by database parsers due to messy values.",
      "No native vector operations possible"),
 ]
-for chunk in (DEFECTS[:3], DEFECTS[3:]):
+for i, chunk in enumerate((DEFECTS[:3], DEFECTS[3:])):
+    if i:
+        gap(1)
     for col, d in zip(st.columns(3), chunk):
         with col:
             defect(*d)

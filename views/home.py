@@ -36,7 +36,7 @@ left, right = st.columns([7, 5], vertical_alignment="center", gap="large")
 with left:
     html('<div class="eyebrow">Big Data Project · Group 5</div>')
     html('<div class="h1">From <span class="hl">messy data</span> to clear answers</div>')
-    html('<div class="lead">We generated <span class="hl">5 million</span> synthetic lung-cancer patient records, '
+    html('<div class="lead">We generated <span class="hl">10 million</span> synthetic lung-cancer patient records, '
          'made them <span class="hl">messy on purpose</span>, cleaned them, and built dashboards and an AI assistant on top.</div>')
     gap(1)
     b1, b2, _ = st.columns([1.5, 1, 1.5])
@@ -75,7 +75,7 @@ def explore(col, key, icon_markup, title, text, link):
 with st.container(key="explore_grid"):
     row1 = st.columns(2, gap="medium")
     explore(row1[0], "synth", ICONS["dataset"], "Realistic Synthetic Dataset",
-            "5 million records generated from published reference distributions. See the sources and the code.",
+            "10 million records generated from published reference distributions. See the sources and the code.",
             lambda: html(f'<a class="lnk" href="{GITHUB_URL}" target="_blank">View GitHub repo →</a>'))
     explore(row1[1], "messy", ICONS["warning"], "Messy Dataset",
             "See the raw data and everything wrong with it.",
@@ -96,7 +96,7 @@ gap(1)
 html('<div class="card about"><div class="facts">'
      f'<div class="row">{ICONS["shield"]}<span><b>Synthetic:</b> no real patients, not medical advice</span></div>'
      f'<div class="row">{ICONS["code"]}<span><b>Purpose:</b> practice big-data cleaning and analysis</span></div>'
-     f'<div class="row">{ICONS["scale"]}<span><b>Scale:</b> <span class="hl">5 million</span> rows across 14 columns</span></div>'
+     f'<div class="row">{ICONS["scale"]}<span><b>Scale:</b> <span class="hl">10 million</span> rows across 14 columns</span></div>'
      '</div><div class="tech-tiles">'
      f'<div class="tech-tile"><img src="{PYTHON}" alt="Python logo"><span>Python</span></div>'
      f'<div class="tech-tile"><img src="{PARQUET}" alt="Parquet logo"><span>Parquet</span></div>'
