@@ -18,7 +18,7 @@ CLEAN_FILE = "cleaned_lung_cancer_dataset.csv" # TODO: cleaned file name
 # It must start with https://app.powerbi.com/view?r=   ("" = placeholder box)
 POWERBI = {
     "messy": "https://app.powerbi.com/reportEmbed?reportId=f8d82a2d-c8b1-4199-97a8-8be7c9efc1d8&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4",
-    "clean": "https://app.powerbi.com/reportEmbed?reportId=09d6907b-2d20-465c-8deb-be6606a69b5d&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4",
+    "clean": "https://app.powerbi.com/reportEmbed?reportId=023dec27-f439-42c2-b7d9-ef3985f8c1a9&autoAuth=true&ctid=cceb61f2-e867-476f-8597-b4cf22555bc4",
 }
 
 STATS = {
