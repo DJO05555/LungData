@@ -129,6 +129,8 @@ celerybeat.pid
 
 # Environments
 .env
+.env.*
+!.env.example
 .venv
 env/
 venv/
@@ -181,3 +183,5 @@ cython_debug/
 .cursorindexingignore
 
 .streamlit/secrets.toml
+.streamlit/secrets.*
+secrets.toml
