@@ -1,15 +1,15 @@
 import re
 
-GREETING = ("Hi! I can answer questions about our 5-million-row lung cancer dataset: what's in it, "
+GREETING = ("Hi! I can answer questions about our 10-million-row lung cancer dataset: what's in it, "
             "how we cleaned it, and what we found. What would you like to know?")
 
 # TODO: add the key findings from the cleaned Power BI dashboard, one sentence each,
 # for example "Current smokers have a higher positive rate than never-smokers."
 FINDINGS = []
 
-SIZE = "The raw dataset has 5,004,574 rows and 14 columns."
+SIZE = "The raw dataset has 10,024,574 rows and 14 columns."
 POSITIVE = "21.6% of records have a positive diagnosis."
-MESSY_SUMMARY = ("The raw data has 5,004,574 rows and 14 columns. 40.8% of rows have at least one blank cell, "
+MESSY_SUMMARY = ("The raw data has 10,024,574 rows and 14 columns. 28.8% of rows have at least one blank cell, "
                  "gender has 11 spelling variants and smoking status 18, 23,316 ages are written as words, "
                  "128,044 values are negative (like ages of -4 and -12) plus ages above 115, about 4,100 dates "
                  "are junk like 'yesterday', and every column was read as text.")

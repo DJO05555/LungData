@@ -29,7 +29,7 @@ STATS = {
     "positive_rate": "21.65%",
     "clean_records": "10,014,991",      # TODO: rows after cleaning
     "clean_columns": "14",      # TODO: columns after cleaning
-    "clean_missing": "9,583",      # TODO: blank cells left after cleaning
+    "clean_missing": "0",      # TODO: blank cells left after cleaning
 }
 
 TEAM = [
