@@ -173,6 +173,11 @@ html, body, .stApp {margin: 0; overflow-x: hidden;}
 .st-key-chips button:hover {border-color: #14B8A6; color: #14B8A6;}
 [data-testid="stChatMessage"] {background: #252B2F; border: 1px solid var(--line); border-radius: 16px;}
 .disclaimer {text-align: center; color: var(--muted); font-size: .75rem; margin-top: .6rem;}
+.st-key-bot_info_grid [data-testid="stHorizontalBlock"] {gap: 24px !important;}
+.st-key-bot_info_grid [class*="st-key-panel_"] {height: 190px; box-sizing: border-box;}
+.st-key-bot_info_grid .ask {margin: .55rem 0; gap: .7rem;}
+.st-key-bot_info_grid .ask .ico {width: 28px; height: 28px; border: 0; background: transparent;}
+.st-key-bot_info_grid .ask .ico svg {width: 20px; height: 20px;}
 
 /* dashboard area */
 .dash {border: 1px solid var(--line); border-radius: 16px; min-height: 420px; display: flex; flex-direction: column;
