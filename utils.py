@@ -220,26 +220,10 @@ button[data-baseweb="tab"][aria-selected="true"] p {color: __ACCENT__ !important
 .tbl th {text-align: left; color: var(--muted); font-weight: 600; padding: .6rem .8rem; border-bottom: 1px solid var(--line);}
 .tbl td {padding: .6rem .8rem; border-bottom: 1px solid rgba(255,255,255,.06); color: rgba(255,255,255,.9);}
 
-/* EDA data-quality dashboard */
-.eda-kpi {min-height: 156px; box-sizing: border-box;}
-.eda-kpi.red .v {color: #EF4444;}
-.eda-kpi.good .v {color: #14B8A6;}
-.eda-exact {font-size: .7rem; color: var(--muted); margin-top: .7rem; padding-top: .55rem; border-top: 1px solid rgba(255,255,255,.08);}
-.section-title {display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1rem;}
-.eda-note {min-height: 112px; box-sizing: border-box; border-left: 3px solid #14B8A6;}
-.eda-note b, .eda-detail b {color: #fff; font-size: .9rem;}
-.eda-note p, .eda-detail p {margin: .45rem 0 0; color: var(--muted); font-size: .86rem; line-height: 1.55;}
-.eda-callout {height: 100%; min-height: 220px; box-sizing: border-box; border-left: 3px solid #EF4444;}
-.eda-callout h4 {color: #fff; margin: .9rem 0 .45rem;}
-.eda-callout p {color: var(--muted); line-height: 1.55; font-size: .86rem;}
-.eda-interpretation {margin: 1rem 0; border: 1px solid rgba(20,184,166,.35); background: rgba(20,184,166,.08); border-radius: 12px; padding: .85rem 1rem; color: rgba(255,255,255,.88); font-size: .88rem; line-height: 1.55;}
+/* Expanded data dictionary */
 .eda-detail {padding: .25rem 0;}
-.workflow {min-height: 165px; box-sizing: border-box;}
-.workflow > span {color: #14B8A6; font-size: .75rem; font-weight: 800; letter-spacing: .08em;}
-@media (max-width: 700px) {
-  .eda-kpi {min-height: 135px;}
-  .eda-callout {min-height: auto;}
-}
+.eda-detail b {color: #fff; font-size: .9rem;}
+.eda-detail p {margin: .45rem 0 0; color: var(--muted); font-size: .86rem; line-height: 1.55;}
 
 /* footer (full width) */
 .st-key-footerbar {background: #1E2428; border-top: 1px solid var(--line);
