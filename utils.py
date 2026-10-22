@@ -174,10 +174,23 @@ html, body, .stApp {margin: 0; overflow-x: hidden;}
 [data-testid="stChatMessage"] {background: #252B2F; border: 1px solid var(--line); border-radius: 16px;}
 .disclaimer {text-align: center; color: var(--muted); font-size: .75rem; margin-top: .6rem;}
 .st-key-bot_info_grid [data-testid="stHorizontalBlock"] {gap: 24px !important;}
-.st-key-bot_info_grid [class*="st-key-panel_"] {height: 190px; box-sizing: border-box;}
-.st-key-bot_info_grid .ask {margin: .55rem 0; gap: .7rem;}
+.st-key-bot_info_grid [class*="st-key-panel_"] {height: 136px; box-sizing: border-box; overflow: hidden;}
+.st-key-bot_info_grid .ask {display: inline-flex; width: 32%; margin: .35rem 0; gap: .45rem; vertical-align: top;}
 .st-key-bot_info_grid .ask .ico {width: 28px; height: 28px; border: 0; background: transparent;}
 .st-key-bot_info_grid .ask .ico svg {width: 20px; height: 20px;}
+.st-key-bot_info_grid .ask span {font-size: .72rem; line-height: 1.25;}
+.st-key-bot_info_grid .good {display: inline-block; width: 31%; margin: .45rem 0; vertical-align: top; font-size: .8rem;}
+.st-key-panel_chat {height: 75vh; min-height: 580px; max-height: 780px; display: flex; flex-direction: column; box-sizing: border-box;}
+.st-key-panel_chat [data-testid="stVerticalBlock"] {min-height: 0;}
+.st-key-panel_chat [data-testid="stChatInput"] {margin-top: auto;}
+.st-key-panel_chat [class*="st-key-chat_messages"] {height: clamp(330px, 52vh, 560px) !important; overflow-y: auto; padding-right: .25rem;}
+.st-key-panel_chat .st-key-new_chat button {width: 100%; border: 1px solid var(--line); color: rgba(255,255,255,.8); background: transparent; border-radius: 8px; font-size: .78rem; padding: .45rem .6rem;}
+.chat-row {display: flex; gap: .65rem; align-items: flex-start; margin: .85rem 0; max-width: 76%;}
+.chat-row.user {margin-left: auto; flex-direction: row-reverse;}
+.chat-avatar {width: 34px; height: 34px; flex: 0 0 34px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 12px rgba(20,184,166,.25);}
+.chat-avatar svg {display: block; width: 100%; height: 100%;}
+.chat-bubble {background: #252B2F; border: 1px solid var(--line); color: rgba(255,255,255,.92); border-radius: 14px; padding: .75rem .9rem; font-size: .9rem; line-height: 1.5;}
+.chat-row.user .chat-bubble {background: rgba(20,184,166,.14); border-color: rgba(20,184,166,.28);}
 
 /* dashboard area */
 .dash {border: 1px solid var(--line); border-radius: 16px; min-height: 420px; display: flex; flex-direction: column;
