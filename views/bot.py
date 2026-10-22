@@ -7,7 +7,6 @@ import streamlit.components.v1 as components
 from openai import APIConnectionError, APIError, OpenAI, RateLimitError
 from dotenv import load_dotenv
 
-from knowledge import SUGGESTIONS
 from utils import ICONS, footer, gap, html, icon
 
 CONTEXT_FILE = Path(__file__).parent.parent / "assets" / "lung_cancer_dashboard_interpretation.md"
@@ -107,17 +106,17 @@ with st.container(key="panel_chat"):
             st.rerun()
 
     st.session_state.setdefault("chat", [])
-    chip = None
-    if not st.session_state.chat:
-        html('<div class="muted small" style="margin-top:.25rem;font-weight:600;letter-spacing:.06em;'
-             'text-transform:uppercase">Suggested queries</div>')
-        with st.container(key="chips"):
-            cols = st.columns(2)
-            for i, question in enumerate(SUGGESTIONS):
-                if cols[i % 2].button(question, key=f"chip{i}"):
-                    chip = question
+    with st.container(key="chat_messages", height=540, border=False):
+        for message in st.session_state.chat:
+            html(message_html(message["role"], message["content"]))
+        html('<div id="chat-bottom"></div>')
+    components.html('''<script>
+        const messages = window.parent.document.querySelector('[class*="st-key-chat_messages"]');
+        if (messages) messages.scrollTo({top: messages.scrollHeight, behavior: 'smooth'});
+    </script>''', height=0)
 
-    prompt = chip or st.chat_input("Ask a question about the dataset…")
+    # Keep the composer after the scrollable transcript, like a conventional AI chat.
+    prompt = st.chat_input("Ask a question about the dataset…")
     html('<div class="disclaimer">AI can make mistakes. Synthetic data, not medical advice.</div>')
 
     if prompt:
@@ -129,15 +128,6 @@ with st.container(key="panel_chat"):
                 answer = ask_llm(st.session_state.chat)
             st.session_state.chat.append({"role": "assistant", "content": answer})
             st.rerun()
-
-    with st.container(key="chat_messages", height=540, border=False):
-        for message in st.session_state.chat:
-            html(message_html(message["role"], message["content"]))
-        html('<div id="chat-bottom"></div>')
-    components.html('''<script>
-        const messages = window.parent.document.querySelector('[class*="st-key-chat_messages"]');
-        if (messages) messages.scrollTo({top: messages.scrollHeight, behavior: 'smooth'});
-    </script>''', height=0)
 
 gap(2)
 with st.container(key="panel_cta"):
