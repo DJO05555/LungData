@@ -27,7 +27,7 @@ STATS = {
     "raw_missing_rows": "28.8%",
     "sparsity": "3.5-3.8%",
     "positive_rate": "21.65%",
-    "clean_records": "10,014,991",      # TODO: rows after cleaning
+    "clean_records": "10,014,808",      # TODO: rows after cleaning
     "clean_columns": "14",      # TODO: columns after cleaning
     "clean_missing": "0",      # TODO: blank cells left after cleaning
 }

@@ -5,7 +5,7 @@
 - **Purpose:** Knowledge context for a Cache-Augmented Generation (CAG) assistant that answers questions about the Lung Cancer Patient Dashboard.
 - **Source:** Two dashboard pages (Page 1: Overview, Page 2: Trends and Risk Factors), Power BI style report.
 - **Data nature:** Synthetic, rule-based patient dataset (generated with Faker plus rule-based diagnosis logic, then noise-injected). Patterns reflect the generator's rules, **not real-world epidemiology**.
-- **Dataset scope:** 10,014,991 patient records, years 2016-2025, four hospital branches (NE, SE, NW, SW), patient ages 1-100.
+- **Dataset scope:** 10,014,808 patient records, years 2016-2025, four hospital branches (NE, SE, NW, SW), patient ages 1-100.
 - **Reading note:** Values labeled "approx." were estimated visually from bar lengths and are accurate to roughly +/- 2 percentage points. Values without that label are printed on the dashboard.
 
 ---
@@ -46,7 +46,7 @@
 
 ### 2.1 Headline KPIs
 
-- **Total patients:** 10,014,991 (about 10.01 million).
+- **Total patients:** 10,014,808 (about 10.01 million).
 - **Median age:** 70 years.
 - **Positive rate:** 21.65%.
 
@@ -223,7 +223,7 @@ Rankings are approximate and based on univariate views only. Genetic risk, chron
 
 ## 7. Quick-Lookup Facts (for retrieval)
 
-- Total patients: **10,014,991**
+- Total patients: **10,014,808**
 - Median age: **70**
 - Overall positive rate: **21.65%** (2.17M positive, 7.85M negative)
 - Peak age group: **65-75** (about 3.55M)
