@@ -124,8 +124,8 @@ html, body, .stApp {margin: 0; overflow-x: hidden;}
 .about .row {display: flex; align-items: center; gap: .7rem; color: rgba(255,255,255,.9); font-size: 1rem;}
 .line-icon {width: 20px; height: 20px; flex: 0 0 20px; color: #14B8A6; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; stroke: currentColor;}
 .ico24 .line-icon {width: 20px; height: 20px; color: rgba(255,255,255,.7);}
-.tech-tiles {display: grid; grid-template-columns: repeat(3, 160px); gap: 12px; align-items: center;}
-.tech-tile {width: 160px; height: 96px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.04);
+.tech-tiles {display: grid; grid-template-columns: repeat(4, 130px); gap: 10px; align-items: center;}
+.tech-tile {width: 130px; height: 96px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.04);
             display: flex; flex-direction: column; justify-content: center; align-items: center; box-sizing: border-box; overflow: hidden;}
 .tech-tile img {display: block; height: 40px; max-width: 92px; object-fit: contain; margin-bottom: 7px;}
 .tech-tile span {color: var(--muted); font-size: .7rem; font-weight: 600; line-height: 1;}
