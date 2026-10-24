@@ -28,6 +28,7 @@ ICONS = {
 PYTHON = asset_uri("python.png")
 PARQUET = asset_uri("parquet.png")
 POWER_BI = asset_uri("power-bi.png")
+OPEN_AI = asset_uri("open_ai.png")
 
 
 # ---------- Hero ----------
@@ -101,6 +102,7 @@ html('<div class="card about"><div class="facts">'
      f'<div class="tech-tile"><img src="{PYTHON}" alt="Python logo"><span>Python</span></div>'
      f'<div class="tech-tile"><img src="{PARQUET}" alt="Parquet logo"><span>Parquet</span></div>'
      f'<div class="tech-tile"><img src="{POWER_BI}" alt="Power BI logo"><span>Power BI</span></div>'
+     f'<div class="tech-tile"><img src="{OPEN_AI}" alt="Power BI logo"><span>Open AI</span></div>'
      '</div></div>')
 
 # ---------- Team ----------
